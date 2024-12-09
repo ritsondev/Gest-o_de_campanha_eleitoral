@@ -39,6 +39,8 @@ user_eleitores eleitores[110];
 user_deputados deputados[90];
 
 
+//criptografia
+
 void criptograpycand(){
 	
 	int i;
@@ -62,6 +64,59 @@ void criptograpycand(){
 	fclose(candidatpsc);
 	
 }
+
+void criptograpycand2(){
+	
+	int i2;
+	
+	FILE *eleitores=fopen("eleitores.itls.txt","r+");
+	fseek(eleitores,0,SEEK_END);
+	long space2=ftell(eleitores);
+	void *putmemori2=malloc(space2);
+	rewind(eleitores);
+	fread(putmemori2,space2,1,eleitores);
+	fclose(eleitores);
+	
+	for(i2=0;i2<space2;i2++){
+		                    
+	*(char *)(putmemori2 + i2)+=1;
+	
+	}
+	
+	FILE *eleitorespsc=fopen("eleitores.itls.txt","w+");
+	fwrite(putmemori2,space2,1,eleitorespsc);
+	fclose(eleitorespsc);
+	
+}
+
+void criptograpycand3(){
+	
+	int i3;
+	
+	FILE *deputados=fopen("deputados.itls.txt","r+");
+	fseek(deputados,0,SEEK_END);
+	long space3=ftell(deputados);
+	void *putmemori3=malloc(space3);
+	rewind(deputados);
+	fread(putmemori3,space3,1,deputados);
+	fclose(deputados);
+	
+	for(i3=0;i3<space3;i3++){
+		                    
+	*(char *)(putmemori3 + i3)+=1;
+	
+	}
+	
+	FILE *deputadospsc=fopen("deputados.itls.txt","w+");
+	fwrite(putmemori3,space3,1,deputadospsc);
+	fclose(deputadospsc);
+	
+}
+
+//fim criptografia
+
+
+//descriptografia
 
 void desccriptograpycand(){
 	
@@ -88,6 +143,58 @@ void desccriptograpycand(){
 	
 }
 
+void desccriptograpycand2(){
+	
+	int i2;
+	
+	FILE *eleitores=fopen("eleitores.itls.txt","r+");
+	fseek(eleitores,0,SEEK_END);
+	long space2=ftell(eleitores);
+	void *putmemori2=malloc(space2);
+	rewind(eleitores);
+	fread(putmemori2,space2,1,eleitores);
+	fclose(eleitores);
+	
+	for(i2=0;i2<space2;i2++){
+		                    
+	*(char *)(putmemori2 + i2)-=1;
+	
+	}
+	
+	FILE *eleitorespsc=fopen("eleitores.itls.txt","w+");
+	fwrite(putmemori2,space2,1,eleitorespsc);
+	fclose(eleitorespsc);
+	
+	
+}
+
+void desccriptograpycand3(){
+	
+	int i3;
+	
+	FILE *deputados=fopen("deputados.itls.txt","r+");
+	fseek(deputados,0,SEEK_END);
+	long space3=ftell(deputados);
+	void *putmemori3=malloc(space3);
+	rewind(deputados);
+	fread(putmemori3,space3,1,deputados);
+	fclose(deputados);
+	
+	for(i3=0;i3<space3;i3++){
+		                    
+	*(char *)(putmemori3 + i3)-=1;
+	
+	}
+	
+	FILE *deputadospsc=fopen("deputados.itls.txt","w+");
+	fwrite(putmemori3,space3,1,deputadospsc);
+	fclose(deputadospsc);
+	
+	
+}
+
+//descriptografia
+
 void savedates(){
 	
 	FILE *candidatpsc=fopen("candidatos.itls.txt","w+");
@@ -103,11 +210,15 @@ void savedates(){
 	fclose(deputado);
 	
 	criptograpycand();
+	criptograpycand2();
+	criptograpycand3();
 	
 }
 
 void getdatessaves(){
 	desccriptograpycand();
+	desccriptograpycand2();
+	desccriptograpycand3();
 		FILE *candidatpsc=fopen("candidatos.itls.txt","r+");
 	fread(candidatos,sizeof(candidatos),1,candidatpsc);
 	fclose(candidatpsc);
@@ -136,9 +247,12 @@ void  backlog(){
 		break;
 		
 		case 'n':
+			
 		system("cls");
 		printf("Volte sempre");
 		savedates();
+		fflush(stdin);
+		system("pause");
 		break;	
 		
 		default:
@@ -165,6 +279,8 @@ void  backini(){
 		system("cls");
 		printf("Volte sempre");
 		savedates();
+		fflush(stdin);
+		system("pause");
 		break;	
 		
 		default:
@@ -837,7 +953,9 @@ int pagemain(){
 		break;	
 		
 		case 5:
+			fflush(stdin);
 			savedates();
+			system("pause");
 		break;	
 		
 		default:

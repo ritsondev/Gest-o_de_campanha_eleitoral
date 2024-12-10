@@ -364,7 +364,8 @@ int logindecandy (){
 	gotoxy(45,9);
 	gets(chave2);
 	fflush(stdin);
-			printf("\n");printf("\n");printf("\n");printf("\n");printf("\n");printf("\n");printf("\n");
+	
+			printf("\n");
 			
 			
 		
@@ -404,7 +405,9 @@ int logindecandy (){
 						
 						
 						valid--;
-					}printf("Atingiu o limite de tentativas\n");backlog();
+					}printf("Atingiu o limite de tentativas\n");
+					fflush(stdin);
+					backlog();
 					
 
 						
@@ -421,6 +424,7 @@ int logindecandy (){
 			if(i2>=10){
 					
 					printf("\t\t\t\tEste candidato não existe\n");
+					fflush(stdin);
 					backlog();
 					
 			}
@@ -433,7 +437,7 @@ int logindecandy (){
 			char name[25],partido[25],chave[50];
 			
 			for(i=1;i<10;i++){
-				if(candidatos[i].exist==1){
+				if(candidatos[i].exist>=1){
 					control_space++;
 				}
 			}
@@ -441,6 +445,7 @@ int logindecandy (){
 			if(control_space >=10){
 				
 				printf("Já não há espaço para cadastro de eleitores\n");
+				fflush(stdin);
 				backlog();
 				
 			}
@@ -448,7 +453,6 @@ int logindecandy (){
 			
 			
 	textcolor(1);printf("\t\t\t\t\t     CADASTRO PARA CANDIDATOS\n");
-	
 	textcolor(1);printf("\t\t\t\t\t_________________________________\n");
 	textcolor(1);printf("\t\t\t\t\t#\t");
 	textcolor(2);printf("    CADASTRAR-SE\t");
@@ -485,7 +489,9 @@ int logindecandy (){
 	gotoxy(45,12);
 	gets(chave);
 	fflush(stdin);
-			printf("\n");printf("\n");printf("\n");printf("\n");printf("\n");printf("\n");printf("\n");
+	
+			printf("\n");
+			
 			for(i=1;i<10;i++){
 			cmp1=strcmp(name,candidatos[i].nome);	
 			cmp2=strcmp(partido,candidatos[i].namepart);
@@ -564,11 +570,11 @@ int pagemain(){
 	textcolor(8);printf("     3-|VOTAR COMO DEPUTADO|");
 	textcolor(1);printf("\t|\n");
 	textcolor(1);printf("\t\t\t\t\t|_______________________________|\t\t\t\t\n");
-		textcolor(1);printf("\t\t\t\t\t|\t");
+	textcolor(1);printf("\t\t\t\t\t|\t");
 	textcolor(7);printf("   4-|RELATÓRIO|");
 	textcolor(1);printf("\t|\n");
 	textcolor(1);printf("\t\t\t\t\t|_______________________________|\t\t\t\t\n");
-		textcolor(1);printf("\t\t\t\t\t|\t");
+	textcolor(1);printf("\t\t\t\t\t|\t");
 	textcolor(6);printf("5-|SAIR E SALVAR|");
 	textcolor(1);printf("\t|\n");
 	textcolor(1);printf("\t\t\t\t\t|_______________________________|\t\t\t\t\n");
@@ -622,7 +628,7 @@ int pagemain(){
 	gotoxy(45,6);
 	gets(name3);
 	fflush(stdin);
-			printf("\n");printf("\n");printf("\n");printf("\n");printf("\n");printf("\n");printf("\n");
+			printf("\n");
 			
 			
 			for(cont=1;cont<109;cont++){
@@ -643,11 +649,11 @@ int pagemain(){
 					eleitores[cont].exist==1;
 					strcpy(eleitores[cont].nome,name3);
 					howuser++;
-					cont=109;
 					system("cls");
+					printf("NOME:%s\n",eleitores[cont].nome);
 					//placar para votar
 					for(cont2=1;cont2<10;cont2++){
-						puts(eleitores[cont].nome);
+						
 						if(candidatos[cont2].exist==1){
 							textcolor(1);printf("_________________________________\n");	
 							textcolor(2);printf("Candidato:%s\n",candidatos[cont2].nome);	
@@ -665,17 +671,18 @@ int pagemain(){
 					
 					
 					printf("\t\t\t\tDigite o número do candidato que deseja votar:");
-					scanf("%d",&voto);
+					scanf("%i",&voto);
 					fflush(stdin);
 					
 					
 					if(candidatos[voto].exist==0){
 						printf("Este candidato não existe\n");
 						backini();
-					};
+					}
 					
 					candidatos[voto].eleitores++;
 					strcpy(eleitores[cont].candidatovoto,candidatos[voto].nome);
+					cont=109;
 					backini();
 					
 				}
@@ -704,10 +711,11 @@ int pagemain(){
 			printf("\t\t\t\tDigite o codigo para votar como deputado:");
 			scanf("%d",&codigo);
 			fflush(stdin);
+			
 			if(codigo==DEPUTADOS_CODIGO){
 				
-				system("cls");
-					textcolor(1);printf("\t\t\t\t\tPAGINA PARA VOTOS DE DEPUTADOS\n");
+			system("cls");
+			textcolor(1);printf("\t\t\t\t\tPAGINA PARA VOTOS DE DEPUTADOS\n");
 	
 	textcolor(1);printf("\t\t\t\t\t_________________________________\n");
 	textcolor(1);printf("\t\t\t\t\t#\t");
@@ -730,12 +738,12 @@ int pagemain(){
 	gets(name4);
 	fflush(stdin);
 	
-			printf("\n");printf("\n");printf("\n");printf("\n");printf("\n");printf("\n");printf("\n");
+			printf("\n");
 			
 			
 			for(cont1=1;cont1<109;cont1++){
-				cmp5=strcmp(name4,deputados[cont1].nome);
-				cmp52=strcmp(name4,eleitores[cont1].nome);
+				cmp5=strcmp(deputados[cont1].nome,name4);
+				cmp52=strcmp(eleitores[cont1].nome,name4);
 				if(cmp5==0 || cmp52==0){
 				printf("\t\t\t\tEste utilizador já votou ou tú estás a usar nome errado\n");
 				cont1=109;
@@ -750,8 +758,8 @@ int pagemain(){
 					deputados[cont1].exist==1;
 					strcpy(deputados[cont1].nome,name4);
 					howdeput++;
-					cont=109;
 					system("cls");
+					
 					//placar para votar
 					for(cont3=1;cont3<10;cont3++){
 						
@@ -773,24 +781,20 @@ int pagemain(){
 					
 					
 					printf("\t\t\t\tDigite o número do candidato que deseja votar:");
-					scanf("%d",&voto1);
+					scanf("%i",&voto1);
 					fflush(stdin);
 					
 					if(candidatos[voto1].exist==0){
 						printf("Este candidato não existe\n");
 						backini();
-					};
+					}
 					
 					candidatos[voto1].deputados++;
 					strcpy(deputados[cont1].candidatovoto,candidatos[voto1].nome);
+					cont=109;
 					backini();
-					
+					}
 				}
-				
-				
-			}
-				
-				
 			}else{
 				fflush(stdin);
 				system("color 47");
@@ -804,9 +808,8 @@ int pagemain(){
 		
 		case 4:
 		system("cls");
-		int codr;
 		
-		porcent=(howdeput+howuser)/100;
+		int codr;
 		
 		printf("Digite o codigo para o relatório:");	
 		scanf("%d",&codr);	
@@ -815,6 +818,7 @@ int pagemain(){
 		if(codr==PASSWORD_REL){
 			
 			system("cls");
+			porcent=(howdeput+howuser)/100;
 			
 		/*
 		
@@ -829,7 +833,7 @@ int pagemain(){
 			if(howcand>0){
 				for(showvt=1;showvt<10;showvt++){
 					
-					if(candidatos[showvt].exist>0){
+					if(candidatos[showvt].exist==1){
 						
 						candidatos[showvt].totalvotos=candidatos[showvt].deputados+candidatos[showvt].eleitores;
 						candidatos[showvt].porcentvot=porcent*candidatos[showvt].totalvotos;
@@ -865,8 +869,8 @@ int pagemain(){
 				
 			}
 			
-			fflush(stdout);
-			printf("\n\n\n");
+			fflush(stdin);
+			printf("\n");
 			
 			//parte 2
 			
@@ -874,7 +878,7 @@ int pagemain(){
 			
 			for(show2=1;show2<109;show2++){
 				
-			if(eleitores[show2].exist==1){
+			if(eleitores[show2].exist>=1){
 				
 				printf("NOME:%s\n",eleitores[show2].nome);
 				printf("NÚMERO:%d\n",show2);
@@ -890,10 +894,10 @@ int pagemain(){
 				
 			}
 			
-			fflush(stdout);
-			printf("\n\n\n");
-			//parte3
+			fflush(stdin);
+			printf("\n");
 			
+			//parte3
 			
 			if(howdeput>0){
 			
@@ -914,8 +918,10 @@ int pagemain(){
 				printf("NÃO HÁ DEPUTADOS REGISTRADOS\n");
 				
 			}
-			printf("\n\n\n");
-			fflush(stdout);
+			
+			printf("\n");
+			
+			fflush(stdin);
 			printf("TOTAL DE PESSOAS:%d\n",howdeput+howuser);
 			printf("TOTAL DE CANDIDATOS:%d\n",howcand);
 			printf("TOTAL DE ELEITORES:%d\n",howuser);
@@ -934,7 +940,9 @@ int pagemain(){
 				}
 				
 			}
+			
 			fflush(stdin);
+			
 			printf("\n");
 			printf("VENCEDOR TEMPORARIO:%s\n",vencedor);
 			backini();
